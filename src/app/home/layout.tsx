@@ -1,16 +1,14 @@
+import { Nav } from "./Nav"
+
 export default function RootLayout({
-  arrondissement,
-  genre,
   children,
 }: {
-  arrondissement: React.ReactNode
-  genre: React.ReactNode
   children: React.ReactNode
 }) {
   return (
-    <main className="h-full flex flex-row items-center justify-between p-24">
-      {arrondissement}
-      {genre}
+    <main className="w-full h-full flex flex-col items-start justify-between p-24">
+      <Nav />
+      {children}
     </main>
   )
 }
