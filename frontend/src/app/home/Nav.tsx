@@ -9,8 +9,8 @@ export function Nav() {
 
     return (
         <nav className="flex flex-row gap-3">
-            <Link href="/home/genre" className={segment === "genre" ? "text-green-700" : ""}>Genre</Link>
-            <Link href="/home/arrondissement" className={segment === "arrondissement" ? "text-green-700" : ""}>Arrondissement</Link>
+            <Link href="/home/species" className={segment === "species" ? "text-green-700" : ""}>Species</Link>
+            <Link href="/home/district" className={segment === "district" ? "text-green-700" : ""}>Districts</Link>
         </nav>
     )
 }
