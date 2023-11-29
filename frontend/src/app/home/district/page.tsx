@@ -1,10 +1,8 @@
 import { District } from "@/lib/api_types";
 
 async function fetchDistricts() {
-    const response = await fetch('http://localhost:8000/tree/districts/');
+    const response = await fetch('http://localhost:8000/database/districts/');
     const data: District[] = await response.json()
-
-    await new Promise((resolve) => setTimeout(resolve, 1000))
 
     return data
 }

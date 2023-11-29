@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
-export class TreeService {
+export class DatabaseService {
   constructor(private prisma: PrismaService) {}
 
   async getDistricts(

@@ -1,10 +1,8 @@
 import { Species } from "@/lib/api_types";
 
 async function fetchSpecies() {
-    const response = await fetch('http://localhost:8000/tree/species/');
+    const response = await fetch('http://localhost:8000/database/species/');
     const data: Species[] = await response.json()
-
-    await new Promise((resolve) => setTimeout(resolve, 1000))
 
     return data
 }

@@ -1,16 +1,16 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import { TreeService } from './tree.service';
+import { ApiService } from './api.service';
 
-@Controller('tree')
-export class TreeController {
-  constructor(private readonly treeService: TreeService) {}
+@Controller('api')
+export class ApiController {
+  constructor(private readonly apiService: ApiService) {}
 
   @Get('districts')
   async getDistricts(
     @Query('order_by') orderBy?: 'count' | 'name',
     @Query('sort_order') sortOrder?: 'asc' | 'desc',
   ) {
-    return await this.treeService.getDistricts(orderBy, sortOrder);
+    return await this.apiService.getDistricts(orderBy, sortOrder);
   }
 
   @Get('species')
@@ -18,6 +18,6 @@ export class TreeController {
     @Query('order_by') orderBy?: 'count' | 'name',
     @Query('sort_order') sortOrder?: 'asc' | 'desc',
   ) {
-    return await this.treeService.getSpecies(orderBy, sortOrder);
+    return await this.apiService.getSpecies(orderBy, sortOrder);
   }
 }
