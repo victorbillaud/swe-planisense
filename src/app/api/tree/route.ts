@@ -1,16 +1,25 @@
+import { facetGroupOutputSerializer, responseToJSON } from '@/lib/serializer';
 import { type NextRequest } from 'next/server';
 
 export async function GET(request: NextRequest) {
 
     const searchParams = request.nextUrl.searchParams
-    const limit = searchParams.get('limit') || "20"
-    const offset = searchParams.get('offset') || "0"
+    const field = searchParams.get('field')
 
-    // `${process.env.DATA_API_URL}/api/explore/v2.1/catalog/datasets/les-arbres/records?offset=${offset}&limit=${limit}`;
+    if (!field || field !== "arrondissement" && field !== "genre") {
+        return new Response(JSON.stringify({ message: 'Missing field' }), {
+            status: 400,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+    }
 
-    const url = new URL(`${process.env.DATA_API_URL}/api/explore/v2.1/catalog/datasets/les-arbres/records`);
-    url.searchParams.set('offset', offset)
-    url.searchParams.set('limit', limit)
+
+    const url = new URL(`${process.env.DATA_API_URL}/api/records/1.0/search/`);
+    url.searchParams.set('dataset', 'les-arbres')
+    url.searchParams.set('rows', '0')
+    url.searchParams.set('facet', field)
 
     const res = await fetch(url, {
         headers: {
@@ -29,10 +38,14 @@ export async function GET(request: NextRequest) {
         });
     }
 
-    const data = await res.json();
+    // Serialize the response into an object
+    const data = await responseToJSON(res)
 
+    // Serialize the response into the output format expected by the client
+    const output = facetGroupOutputSerializer(data)
+    
     // Return the data in JSON format
-    return new Response(JSON.stringify({ data }), {
+    return new Response(JSON.stringify(output), {
         headers: {
             'Content-Type': 'application/json',
         },

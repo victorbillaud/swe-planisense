@@ -1,22 +1,23 @@
-export interface TreeLocation {
-    idbase: number;
-    typeemplacement: string;
-    domanialite: string;
-    arrondissement: string;
-    complementadresse: string;
-    numero: number | null;
-    adresse: string;
-    idemplacement: string;
-    libellefrancais: string;
-    genre: string;
-    espece: string;
-    varieteoucultivar: string | null;
-    circonferenceencm: number;
-    hauteurenm: number;
-    stadedeveloppement: string;
-    remarquable: string;
-    geo_point_2d: {
-        lon: number;
-        lat: number;
+export interface ApiResponse {
+    nhits: number;
+    parameters: {
+        dataset: string;
+        timezone: string;
+        rows: number;
+        format: string;
     };
+    records: [];
+    facet_groups: FacetGroup[];
+}
+
+export interface FacetGroup {
+    name: string;
+    facets: Facet[];
+}
+
+export interface Facet {
+    name: string;
+    path: string;
+    count: number;
+    state: string;
 }
