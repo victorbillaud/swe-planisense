@@ -33,12 +33,26 @@ export class ApiService {
     });
 
     if (!res.ok) {
-      // Handle errors, for example, by returning a status code and message
       throw new Error('Error fetching data');
     }
 
-    // Serialize the response into an object
     return await this.responseToJSON(res);
+  };
+
+  private orderData = (
+    data: ReturnType<typeof this.facetGroupOutputSerializer>,
+    orderBy: '_count' | 'arrondissement' | 'genre',
+    sortOrder: 'asc' | 'desc',
+  ) => {
+    return data.sort((a, b) => {
+      if (a[orderBy] < b[orderBy]) {
+        return sortOrder === 'asc' ? -1 : 1;
+      }
+      if (a[orderBy] > b[orderBy]) {
+        return sortOrder === 'asc' ? 1 : -1;
+      }
+      return 0;
+    });
   };
 
   async getDistricts(
@@ -47,8 +61,18 @@ export class ApiService {
   ) {
     const data = await this.fetchApi('arrondissement');
 
-    // Serialize the response into the output format expected by the client
-    return this.facetGroupOutputSerializer(data, 'arrondissement');
+    const serializedData = this.facetGroupOutputSerializer(
+      data,
+      'arrondissement',
+    );
+
+    const orderedData = this.orderData(
+      serializedData,
+      orderBy === 'count' ? '_count' : 'arrondissement',
+      sortOrder,
+    );
+
+    return orderedData;
   }
 
   async getSpecies(
@@ -57,7 +81,14 @@ export class ApiService {
   ) {
     const data = await this.fetchApi('genre');
 
-    // Serialize the response into the output format expected by the client
-    return this.facetGroupOutputSerializer(data, 'genre');
+    const serializedData = this.facetGroupOutputSerializer(data, 'genre');
+
+    const orderedData = this.orderData(
+      serializedData,
+      orderBy === 'count' ? '_count' : 'genre',
+      sortOrder,
+    );
+
+    return orderedData
   }
 }
