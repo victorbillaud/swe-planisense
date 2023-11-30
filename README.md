@@ -47,3 +47,7 @@ To populate the database, you must run the following command inside the backend 
 `yarn prisma migrate reset`
 
 It will run the migrations and seeders.
+
+## Run backend test
+
+Move inside the backend folder and run `yarn test`. The local database should be started
