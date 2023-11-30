@@ -21,7 +21,7 @@ export class ApiService {
   };
 
   private fetchApi = async (facet: 'arrondissement' | 'genre') => {
-    const url = new URL(`${process.env.DATA_API_URL}/api/records/1.0/search/`);
+    const url = new URL(`https://opendata.paris.fr/api/records/1.0/search/`);
     url.searchParams.set('dataset', 'les-arbres');
     url.searchParams.set('rows', '0');
     url.searchParams.set('facet', facet);
